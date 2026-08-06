@@ -68,6 +68,14 @@ if (isset($_GET["status"])) {
       </div>
     </form>
 
+    <div class="w-full border border-s-black rounded-[10px] p-[15px] flex flex-col gap-[5px]">
+      <h1 class="font-semibold text-s-black text-[15px]">Akun Demo</h1>
+      <p class="text-s-grey text-[13px]">Admin : <span class="font-medium text-s-black">admin / admin</span></p>
+      <p class="text-s-grey text-[13px]">Security 1 : <span class="font-medium text-s-black">sec1 / sec1</span></p>
+      <p class="text-s-grey text-[13px]">Security 2 : <span class="font-medium text-s-black">sec2 / sec2</span></p>
+      <p class="text-s-grey text-[13px]">Security 3 : <span class="font-medium text-s-black">sec3 / sec3</span></p>
+    </div>
+
   </section>
 </body>
 
