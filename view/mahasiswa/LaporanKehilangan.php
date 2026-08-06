@@ -12,10 +12,25 @@ if (isset($_POST["submit"])) {
   be_laporanKehilangan();
 }
 
+// notif
+$statusMsg = '';
+if (isset($_GET["status"])) {
+  switch ($_GET["status"]) {
+    case "notImage":
+      $statusMsg = "File harus berupa gambar (JPG/JPEG/PNG)";
+      break;
+    case "bigSize":
+      $statusMsg = "Ukuran foto maksimal 2mb";
+      break;
+    case "gagal":
+      $statusMsg = "Ada yang salah, silahkan coba lagi";
+      break;
+  }
+}
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <?php include '../../tamplate/meta.php'; ?>
@@ -23,74 +38,86 @@ if (isset($_POST["submit"])) {
   <title>Laporan Barang</title>
 </head>
 
-<body class=" md:w-5/12 md:m-auto border border-s-black border-e-black">
-  <section class="flex flex-col gap-[10px]">
+<body class="bg-s-grey/20">
+  <main class="w-full max-w-[430px] mx-auto min-h-screen bg-s-white shadow-2xl flex flex-col">
     <?php judulPath("Laporan Barang", "./LaporanBarang.php") ?>
 
-    <main class="px-[15px] flex flex-col gap-[20px] pb-[15px]">
-      <div class="flex flex-col gap-[5px]">
-        <h1 class="text-t-black font-semibold text-[18px]"> Barang</h1>
-        <section class="p-[10px] bg-ijo-500 rounded-[10px]">
-          <div class="flex justify-between items-center text-s-white mb-2">
-            <h1 class="font-semibold text-[15px]"><?= $data['jenisBarang'] ?></h1>
-            <h2 class="font-normal text-[10px]"><?= tampilanTanggal($data['tanggal']) ?></h2>
+    <div class="flex-1 flex flex-col gap-5 px-4 py-5">
+      <div class="flex flex-col gap-1.5">
+        <h1 class="text-base font-semibold text-s-black">Barang</h1>
+
+        <div class="flex flex-col gap-3 p-3 rounded-xl bg-ijo-500 text-s-white">
+          <div class="flex items-center justify-between gap-2">
+            <h2 class="text-sm font-semibold"><?= $data['jenisBarang'] ?></h2>
+            <span class="shrink-0 text-xs text-ijo-100"><?= tampilanTanggal($data['tanggal']) ?></span>
           </div>
-          <div class="flex gap-[5px]">
-            <img src="../../img/laporanBarang/<?= $data['urlFoto'] ?>" alt="foto barang" class="w-[64px] h-[64px] bg-s-grey">
-            <div class="text-[10px] text-s-white">
-              <h1 class="font-semibold">Deskripsi ditemukan : </h1>
-              <p class="font-medium shrink"><?= $data['deskripsi'] ?></p>
+
+          <div class="flex gap-3">
+            <div class="w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-s-white/20">
+              <img src="../../img/laporanBarang/<?= $data['urlFoto'] ?>" alt="Foto Barang" class="object-cover w-full h-full">
+            </div>
+            <div class="flex flex-col gap-1 text-xs min-w-0">
+              <p class="font-semibold">Deskripsi ditemukan :</p>
+              <p class="font-medium leading-relaxed"><?= $data['deskripsi'] ?></p>
             </div>
           </div>
-        </section>
+        </div>
       </div>
 
-      <div class="flex flex-col gap-[10px]">
-        <h1 class="text-t-black font-semibold text-[18px]"> Laporan Kehilangan</h1>
+      <div class="flex flex-col gap-4">
+        <h1 class="text-base font-semibold text-s-black">Laporan Kehilangan</h1>
 
-        <form action="" method="post" enctype="multipart/form-data">
-          <!-- Hidden data -->
-          <input type="text" name="id_lapBarang" value="<?= $data['id_lapBarang'] ?>" class="hidden">
+        <?php if ($statusMsg) : ?>
+          <div class="flex items-start gap-2 px-4 py-3 rounded-xl bg-s-red/10 border border-s-red/30 text-s-red text-sm font-medium">
+            <svg class="w-5 h-5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 8v4" />
+              <path d="M12 16h.01" />
+            </svg>
+            <p><?= $statusMsg ?></p>
+          </div>
+        <?php endif; ?>
 
-          <div class="flex flex-col gap-[5px]">
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Nama</h1>
-              <input type="text" name="nama" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan Nama anda" required>
+        <form action="" method="post" enctype="multipart/form-data" class="flex flex-col gap-5">
+          <input type="hidden" name="id_lapBarang" value="<?= $data['id_lapBarang'] ?>">
+
+          <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-1.5">
+              <label for="nama" class="text-sm font-medium text-s-black">Nama</label>
+              <input type="text" name="nama" id="nama" placeholder="Masukan Nama anda" required
+                class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
             </div>
 
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">No Hp</h1>
-              <input type="text" name="nohp" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan No Hp anda" required>
+            <div class="flex flex-col gap-1.5">
+              <label for="nohp" class="text-sm font-medium text-s-black">No Hp</label>
+              <input type="text" name="nohp" id="nohp" placeholder="Masukan No Hp anda" required
+                class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
             </div>
 
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Bukti Kepemilikan</h1>
-              <input type="text" name="bukti" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Contoh : STNK" required>
+            <div class="flex flex-col gap-1.5">
+              <label for="bukti" class="text-sm font-medium text-s-black">Bukti Kepemilikan</label>
+              <input type="text" name="bukti" id="bukti" placeholder="Contoh : STNK" required
+                class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
             </div>
 
-            <div class="flex flex-col gap-1">
-              <label class="font-semibold text-[15px] text-s-black">Bukti Foto</label>
-              <div class="flex items-center gap-[10px]">
-                <label for="foto" class="flex items-center gap-3">
-                  <img src="../../assets/icon/guest-icon-upload.png" id="foto-preview" class="object-cover w-[100px] h-[100px] border border-s-black rounded-[10px]" alt="Foto">
-                </label>
-                <p class="font-normal text-[10px] text-s-black">kirim foto maksimal 2mb</p>
-              </div>
+            <div class="flex flex-col gap-1.5">
+              <label for="foto" class="text-sm font-medium text-s-black">Bukti Foto</label>
+              <label for="foto" class="cursor-pointer self-start">
+                <img src="../../assets/icon/guest-icon-upload.png" id="foto-preview" class="object-cover w-[100px] h-[100px] border border-s-black/20 rounded-xl" alt="Bukti Foto">
+              </label>
+              <p class="text-xs text-s-grey">Kirim foto maksimal 2mb</p>
               <input type="file" id="foto" name="foto" accept="image/*" class="hidden" required>
             </div>
-
-
-            <button type="submit" name="submit" class="w-full px-[10px] py-[5px] rounded-[10px] bg-ijo-500 text-s-white font-medium text-[20px]">KIRIM</button>
-
-
           </div>
+
+          <button type="submit" name="submit"
+            class="w-full h-[48px] rounded-xl bg-ijo-500 text-s-white font-semibold text-base hover:bg-ijo-600 active:bg-ijo-600 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+            Kirim
+          </button>
         </form>
       </div>
-
-
-    </main>
-
-  </section>
+    </div>
+  </main>
 
   <script>
     // Memperbaiki penanganan perubahan gambar
