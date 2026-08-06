@@ -1,32 +1,39 @@
-  <nav class="flex px-[63px] py-[13px] justify-between items-center bg-black w-full bottom-0 left-0 absolute ">
-    <!-- Barang -->
-    <a href="../security/laporan_barang.php">
-      <div class="flex flex-col gap-0 justify-center items-center group cursor-pointer  p-1">
-        <div class="relative">
-          <img src="../../assets/icon/nav-icon-barang.png" alt="Barang" class="size-[30px] group-hover:opacity-0">
-          <img src="../../assets/icon/nav-icon-barang-active.png" alt="Barang-hover" class="size-[30px] opacity-0 absolute top-0 left-0 group-hover:opacity-100">
-        </div>
-        <p class="font-reguler text-[12px] text-s-white group-hover:font-bold">Barang</p>
-      </div>
-    </a>
-    <!-- Pergantian -->
-    <a href="../security/pergantian_shift.php">
-      <div class="flex flex-col gap-0 justify-center items-center group cursor-pointer ">
-        <div class="relative">
-          <img src="../../assets/icon/nav-icon-shift.png" alt="shift" class="size-[30px] group-hover:opacity-0">
-          <img src="../../assets/icon/nav-icon-shift-active.png" alt="shift-hover" class="size-[30px] opacity-0 absolute top-0 left-0 group-hover:opacity-100">
-        </div>
-        <p class="font-reguler text-[12px] text-s-white group-hover:font-bold">Pergantian</p>
-      </div>
-    </a>
-    <!-- Profile -->
-    <a href="../security/profile.php">
-      <div class="flex flex-col gap-0 justify-center items-center group cursor-pointer ">
-        <div class="relative">
-          <img src="../../assets/icon/nav-icon-profile.png" alt="profile" class="size-[30px] group-hover:opacity-0">
-          <img src="../../assets/icon/nav-icon-profile-active.png" alt="profile-hover" class="size-[30px] opacity-0 absolute top-0 left-0 group-hover:opacity-100">
-        </div>
-        <p class="font-reguler text-[12px] text-s-white group-hover:font-bold">Profile</p>
-      </div>
-    </a>
-  </nav>
+<?php
+// Bottom tab bar. Sebelum di-include, set variabel:
+// $navActive = 'home' | 'menu' | 'profile' | 'logout' (default 'home')
+// Opsional $navItems = [ 'key' => ['label' => ..., 'href' => ...], ... ] (default untuk role Security)
+$navActive = $navActive ?? 'home';
+
+$navItems = $navItems ?? [
+  'home' => ['label' => 'Beranda', 'href' => './SecurityJaga.php'],
+  'menu' => ['label' => 'Menu', 'href' => './FiturTambahan.php'],
+  'profile' => ['label' => 'Profil', 'href' => './EditProfile.php'],
+  'logout' => ['label' => 'Keluar', 'href' => '../../'],
+];
+
+$navIcons = [
+  'home' => '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5" /><path d="M5 10v10h5v-6h4v6h5V10" /></svg>',
+  'menu' => '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5" /><rect x="14" y="3" width="7" height="7" rx="1.5" /><rect x="3" y="14" width="7" height="7" rx="1.5" /><rect x="14" y="14" width="7" height="7" rx="1.5" /></svg>',
+  'profile' => '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" /><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5" /></svg>',
+  'logout' => '<svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" /><path d="m16 17 5-5-5-5" /><path d="M21 12H9" /></svg>',
+];
+?>
+<nav class="sticky bottom-0 z-20 w-full bg-s-white border-t border-s-black/10" aria-label="Navigasi utama">
+  <div class="flex items-stretch">
+    <?php foreach ($navItems as $key => $item) :
+      $isLogout = $key === 'logout';
+      $isActive = $key === $navActive;
+    ?>
+      <a href="<?= $item['href'] ?>" aria-label="<?= $item['label'] ?>"
+        class="relative flex-1 flex flex-col items-center justify-center gap-1 min-h-[64px] pb-1 transition-colors hover:bg-ijo-100 active:bg-ijo-100
+          <?= $isLogout
+              ? 'text-s-red'
+              : ($isActive
+                  ? 'text-ijo-600 font-semibold after:absolute after:top-0 after:left-1/2 after:-translate-x-1/2 after:w-8 after:h-[3px] after:rounded-b-full after:bg-ijo-500'
+                  : 'text-s-grey') ?>">
+        <span class="flex items-center justify-center w-11 h-11"><?= $navIcons[$key] ?></span>
+        <span class="text-[11px] leading-none"><?= $item['label'] ?></span>
+      </a>
+    <?php endforeach; ?>
+  </div>
+</nav>
