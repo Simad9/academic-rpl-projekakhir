@@ -99,7 +99,7 @@ if (isset($_POST["jaga"])) {
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <?php include '../../tamplate/meta.php'; ?>
@@ -107,108 +107,93 @@ if (isset($_POST["jaga"])) {
   <title>Security</title>
 </head>
 
-<body class=" md:w-5/12 md:m-auto border border-s-black border-e-black">
-  <section class="flex flex-col gap-[10px] h-screen">
+<body class="bg-s-grey/20">
+  <main class="w-full max-w-[430px] mx-auto min-h-screen bg-s-white shadow-2xl flex flex-col">
     <?php judulPolos("Security") ?>
 
-    <main class="px-[15px] flex flex-col gap-[20px] pb-[15px]">
+    <div class="flex-1 flex flex-col gap-5 px-4 py-5">
 
-      <div class="flex flex-col gap-[10px]">
-        <h1 class="text-t-black font-semibold text-[18px] text-center"> Saat ini yang berjaga</h1>
-        <div class="flex flex-col gap-[5px] border border-ijo-500 p-[10px] rounded-[10px]">
-          <div class="flex justify-between items-center">
-            <h1 class="text-t-black font-semibold text-[15px]">Yang Berjaga</h1>
-            <h1 class="text-t-black font-semibold text-[10px]"><?= tampilanTanggal($tanggal_sekarang) ?></h1>
+      <!-- Saat ini yang berjaga -->
+      <section class="flex flex-col gap-3">
+        <h1 class="text-base font-semibold text-s-black text-center">Saat Ini yang Berjaga</h1>
+
+        <div class="flex flex-col gap-3 p-4 rounded-xl bg-ijo-500 text-s-white">
+          <div class="flex items-center justify-between gap-2">
+            <span class="text-xs font-medium text-ijo-100">Yang Berjaga</span>
+            <span class="shrink-0 text-xs font-medium text-ijo-100"><?= tampilanTanggal($tanggal_sekarang) ?></span>
           </div>
+          <div class="w-full h-px bg-s-white/40"></div>
 
-          <!-- Yang berjaga -->
-          <?php
-          if (!empty($penjagaSekarang)) :
-            foreach ($penjagaSekarang as $penjaga) : ?>
-              <div class="text-center">
-                <h1 class="text-t-black font-bold text-[20px]"><?= $penjaga['nama']  ?></h1>
-                <h2 class="text-t-black font-medium text-[20px]"><?= ubahFormatJam($penjaga['jamMulai']) ?> s/d <?= ubahFormatJam($penjaga['jamAkhir']) ?></h2>
+          <?php if (!empty($penjagaSekarang)) : ?>
+            <?php foreach ($penjagaSekarang as $penjaga) : ?>
+              <div class="flex flex-col items-center gap-1 text-center">
+                <p class="text-xl font-bold"><?= $penjaga['nama'] ?></p>
+                <p class="text-sm font-medium text-ijo-100"><?= ubahFormatJam($penjaga['jamMulai']) ?> s/d <?= ubahFormatJam($penjaga['jamAkhir']) ?></p>
               </div>
-          <?php
-            endforeach;
-          endif; ?>
+            <?php endforeach; ?>
+          <?php else : ?>
+            <p class="text-center text-sm text-ijo-100">Belum ada penjaga saat ini</p>
+          <?php endif; ?>
         </div>
-
-        <!-- Button untuk memulai -->
-
 
         <?php
         if ($belumJaga) : ?>
-          <button class="w-full px-[25px] py-[5px] rounded-[10px] bg-s-grey" disabled>
-            <p class="font-semibold text-xl text-s-white">Tidak Jaga</p>
+          <button type="button" disabled
+            class="w-full h-[48px] rounded-xl bg-s-grey text-s-white font-semibold text-base cursor-not-allowed">
+            Tidak Jaga
           </button>
         <?php else : ?>
           <?php if ($berjaga == "ready") : ?>
-
             <form action="" method="post">
-              <!-- hidden data -->
               <input type="hidden" name="$id_security" value="<?= $id_security ?>">
-
-              <!-- button mulai -->
-              <button type="submit" name="jaga" class="w-full px-[25px] py-[5px] rounded-[10px] bg-ijo-500 hover:bg-ijo-400 cursor-pointer ">
-                <p class="font-semibold text-xl text-s-white">Mulai Berjaga</p>
+              <button type="submit" name="jaga"
+                class="w-full h-[48px] rounded-xl bg-ijo-500 text-s-white font-semibold text-base hover:bg-ijo-600 active:bg-ijo-600 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+                Mulai Berjaga
               </button>
             </form>
-
           <?php elseif ($berjaga == "sedang") : ?>
-            <!-- button sedang -->
-            <button class="w-full px-[25px] py-[5px] rounded-[10px]  bg-s-grey" disabled>
-              <p class="font-semibold text-xl text-s-white">Sedang Berjaga</p>
+            <button type="button" disabled
+              class="w-full h-[48px] rounded-xl bg-s-grey text-s-white font-semibold text-base cursor-not-allowed">
+              Sedang Berjaga
             </button>
-
           <?php elseif ($berjaga == "selesai") : ?>
             <form action="" method="post">
-              <!-- hidden data -->
               <input type="hidden" name="$id_security" value="<?= $id_security ?>">
-
-              <!-- button selesai -->
-              <button type="submit" name="selesai" class="w-full px-[25px] py-[5px] rounded-[10px] bg-ijo-500 hover:bg-ijo-400 cursor-pointer ">
-                <p class="font-semibold text-xl text-s-white">Selesai Berjaga</p>
+              <button type="submit" name="selesai"
+                class="w-full h-[48px] rounded-xl bg-ijo-500 text-s-white font-semibold text-base hover:bg-ijo-600 active:bg-ijo-600 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+                Selesai Berjaga
               </button>
             </form>
-
           <?php endif; ?>
-
         <?php endif; ?>
+      </section>
 
-      </div>
+      <!-- Fitur utama lainnya -->
+      <section class="flex flex-col gap-3">
+        <h1 class="text-base font-semibold text-s-black">Fitur Utama Lainnya</h1>
 
-      <div class="flex flex-col gap-[5px]">
-        <h1 class="text-t-black font-semibold text-[18px]">Fitur Utama Lainnya</h1>
-        <div class="flex flex-col gap-[10px]">
-          <a href="./PenemuanBarang.php">
-            <div class="w-full  text-center px-[25px] py-[5px] rounded-[10px] bg-ijo-500 border border-ijo-500 cursor-pointer ">
-              <p class="font-semibold text-xl text-s-white">Penemuan Barang</p>
-            </div>
+        <div class="flex flex-col gap-2">
+          <a href="./PenemuanBarang.php"
+            class="w-full h-[48px] flex items-center justify-center rounded-xl bg-ijo-500 text-s-white font-semibold text-sm hover:bg-ijo-600 active:bg-ijo-600 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+            Penemuan Barang
           </a>
-          <a href="./ListTemuan.php">
-            <div class="w-full  text-center px-[25px] py-[5px] rounded-[10px] bg-s-white border border-ijo-500 cursor-pointer ">
-              <p class="font-semibold text-xl text-s-black">List Barang Ditemukan</p>
-            </div>
+          <a href="./ListTemuan.php"
+            class="w-full h-[48px] flex items-center justify-center rounded-xl border border-ijo-500 bg-s-white text-ijo-600 font-semibold text-sm hover:bg-ijo-100 active:bg-ijo-100 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+            List Barang Ditemukan
           </a>
-          <a href="./FiturTambahan.php">
-            <div class="w-full  text-center px-[25px] py-[5px] rounded-[10px] bg-s-white border border-ijo-500  cursor-pointer ">
-              <p class="font-semibold text-xl text-s-black">Tambahan</p>
-            </div>
+          <a href="./FiturTambahan.php"
+            class="w-full h-[48px] flex items-center justify-center rounded-xl border border-ijo-500 bg-s-white text-ijo-600 font-semibold text-sm hover:bg-ijo-100 active:bg-ijo-100 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+            Tambahan
           </a>
-          <a href="../../">
-            <div class="w-full  text-center px-[25px] py-[5px] rounded-[10px] bg-s-white border border-s-red cursor-pointer ">
-              <p class="font-semibold text-xl text-s-red">Keluar</p>
-            </div>
+          <a href="../../"
+            class="w-full h-[48px] flex items-center justify-center rounded-xl border border-s-red bg-s-white text-s-red font-semibold text-sm hover:bg-s-red hover:text-s-white active:bg-s-red active:text-s-white focus-visible:ring-2 focus-visible:ring-s-red/40 transition-colors">
+            Keluar
           </a>
-
         </div>
-      </div>
+      </section>
 
-
-    </main>
-
-  </section>
+    </div>
+  </main>
 </body>
 
 </html>
