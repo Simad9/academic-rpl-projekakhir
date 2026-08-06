@@ -7,7 +7,7 @@ if (isset($_POST["submit"])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <?php include '../../tamplate/meta.php'; ?>
@@ -15,61 +15,56 @@ if (isset($_POST["submit"])) {
   <title>Tambah Kunci</title>
 </head>
 
-<body class="md:w-5/12 md:m-auto border border-s-black border-e-black h-scren">
-  <section class="flex flex-col gap-[10px] h-screen">
+<body class="bg-s-grey/20">
+  <main class="w-full max-w-[430px] mx-auto min-h-screen bg-s-white shadow-2xl flex flex-col">
     <?php judulPath("Tambah Kunci", "./ListKunci.php") ?>
 
-    <main class="px-[15px] flex flex-col gap-[20px] pb-[15px]">
+    <div class="flex-1 flex flex-col gap-5 px-4 py-5">
+      <h1 class="text-base font-semibold text-s-black">Tambah Kunci</h1>
 
-      <div class="flex flex-col gap-[10px]">
-        <h1 class="text-t-black font-semibold text-[18px]">Tambah Kunci</h1>
-
-        <form action="" method="post" enctype="multipart/form-data">
-          <div class="flex flex-col gap-[5px]">
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Nama Kunci</h1>
-              <input type="text" name="nama" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan Nama Kunci">
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Lokasi</h1>
-              <input type="text" name="lokasi" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan Lokasi">
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Penganggung Jawab</h1>
-              <input type="text" name="penjaw" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan Penanggung Jawab">
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Note</h1>
-              <textarea type="text" name="note" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Note untuk Kunci"></textarea>
-            </div>
-
-            <div class="flex flex-col gap-1">
-              <label class="font-semibold text-[15px] text-s-black">Foto Kunci</label>
-              <div class="flex items-center gap-[10px]">
-                <label for="foto" class="flex items-center gap-3">
-                  <img src="../../assets/icon/guest-icon-upload.png" id="foto-preview" class="object-cover w-[100px] h-[100px] border border-s-black rounded-[10px]" alt="Foto">
-                </label>
-                <p class="font-normal text-[10px] text-s-black">kirim foto maksimal 2mb</p>
-              </div>
-              <input type="file" id="foto" name="foto" accept="image/*" class="hidden">
-            </div>
-
-            <!-- <a href="./ListKunci.php" class="w-full"> -->
-            <button type="submit" name="submit" class="w-full px-[10px] py-[5px] rounded-[10px] bg-ijo-500 text-s-white font-medium text-[20px]">TAMBAH</button>
-            <!-- </a> -->
-
+      <form action="" method="post" enctype="multipart/form-data" class="flex flex-col gap-5">
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="nama" class="text-sm font-medium text-s-black">Nama Kunci</label>
+            <input type="text" name="nama" id="nama" placeholder="Masukan Nama Kunci" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
           </div>
-        </form>
-      </div>
 
+          <div class="flex flex-col gap-1.5">
+            <label for="lokasi" class="text-sm font-medium text-s-black">Lokasi</label>
+            <input type="text" name="lokasi" id="lokasi" placeholder="Masukan Lokasi" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
+          </div>
 
-    </main>
+          <div class="flex flex-col gap-1.5">
+            <label for="penjaw" class="text-sm font-medium text-s-black">Penanggung Jawab</label>
+            <input type="text" name="penjaw" id="penjaw" placeholder="Masukan Penanggung Jawab" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
+          </div>
 
-  </section>
+          <div class="flex flex-col gap-1.5">
+            <label for="note" class="text-sm font-medium text-s-black">Note</label>
+            <textarea name="note" id="note" rows="3" placeholder="Note untuk Kunci"
+              class="w-full px-4 py-3 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40"></textarea>
+          </div>
+
+          <div class="flex flex-col gap-1.5">
+            <label for="foto" class="text-sm font-medium text-s-black">Foto Kunci</label>
+            <label for="foto" class="cursor-pointer self-start">
+              <img src="../../assets/icon/guest-icon-upload.png" id="foto-preview" class="object-cover w-[100px] h-[100px] border border-s-black/20 rounded-xl" alt="Foto Kunci">
+            </label>
+            <p class="text-xs text-s-grey">Kirim foto maksimal 2mb</p>
+            <input type="file" id="foto" name="foto" accept="image/*" class="hidden">
+          </div>
+        </div>
+
+        <button type="submit" name="submit"
+          class="w-full h-[48px] rounded-xl bg-ijo-500 text-s-white font-semibold text-base hover:bg-ijo-600 active:bg-ijo-600 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+          Tambah
+        </button>
+      </form>
+    </div>
+  </main>
 
   <script>
     // Memperbaiki penanganan perubahan gambar

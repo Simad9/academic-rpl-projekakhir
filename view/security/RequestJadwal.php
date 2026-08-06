@@ -13,81 +13,81 @@ if (isset($_POST["submit"])) {
   requestJadwal();
 }
 
-if (isset($_GET["status"])) {
-  switch ($_GET["status"]) {
-    case "gagal":
-      echo '<script>
-      alert("ada yang gagal");
-      </script>';
-      break;
-  }
-}
+$errorGagal = isset($_GET["status"]) && $_GET["status"] === "gagal";
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <?php include '../../tamplate/meta.php'; ?>
   <?php require '../../tamplate/judul.php'; ?>
-  <title>Requset Jadwal</title>
+  <title>Request Jadwal</title>
 </head>
 
-<body class=" md:w-5/12 md:m-auto border border-s-black border-e-black">
-  <section class="flex flex-col gap-[10px] h-screen">
-    <?php judulPath("Requset Jadwal", "./FiturTambahan.php") ?>
+<body class="bg-s-grey/20">
+  <main class="w-full max-w-[430px] mx-auto min-h-screen bg-s-white shadow-2xl flex flex-col">
+    <?php judulPath("Request Jadwal", "./FiturTambahan.php") ?>
 
-    <main class="px-[15px] flex flex-col gap-[20px] pb-[15px]">
+    <div class="flex-1 flex flex-col gap-5 px-4 py-5">
+      <h1 class="text-base font-semibold text-s-black">Laporan Request Jadwal</h1>
 
-      <div class="flex flex-col gap-[10px]">
-        <h1 class="text-t-black font-semibold text-[18px]">Laporan Request Jadwal</h1>
+      <?php if ($errorGagal) : ?>
+        <div class="flex items-center gap-2 p-3 rounded-lg bg-s-red/10 border border-s-red/30 text-s-red text-sm" role="alert">
+          <svg class="w-5 h-5 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="10" />
+            <path d="M12 8v4" />
+            <path d="M12 16h.01" />
+          </svg>
+          Ada yang gagal, silahkan coba lagi
+        </div>
+      <?php endif; ?>
 
-        <form action="" method="post">
-          <!-- hidden data -->
-          <input type="text" name="id_security" value="<?= $id_security ?>" class="hidden">
+      <form action="" method="post" class="flex flex-col gap-5">
+        <input type="text" name="id_security" value="<?= $id_security ?>" class="hidden">
 
-          <div class="flex flex-col gap-[10px]">
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Tanggal dan Waktu</h1>
-              <div class="flex gap-[5px]">
-                <input type="text" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full  text-center" value="<?= tampilanTanggal($tanggal_sekarang) ?>" readonly="readonly">
-                <input type="text" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full  text-center" value="<?= $waktu_sekarang ?>" readonly="readonly">
-              </div>
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="tanggal" class="text-sm font-medium text-s-black">Tanggal dan Waktu</label>
+            <div class="flex gap-2">
+              <input type="text" id="tanggal" value="<?= tampilanTanggal($tanggal_sekarang) ?>" readonly
+                class="w-full h-[48px] px-4 text-center rounded-lg border border-s-black/10 bg-s-grey/10 text-s-black outline-none">
+              <input type="text" value="<?= $waktu_sekarang ?>" readonly
+                class="w-full h-[48px] px-4 text-center rounded-lg border border-s-black/10 bg-s-grey/10 text-s-black outline-none">
             </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Nama</h1>
-              <input type="text" name="nama" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Isikan Nama Anda" value="<?= $nama_security?>" readonly="readonly">
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Nama Teman Penganti</h1>
-              <select name="id_rekan" id="" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full">
-                <!-- Nanti ambil dari db -->
-                <option value="">Pilih Rekan</option>
-                <?php while ($data = mysqli_fetch_assoc($hasil)) : ?>
-                  <?php if ($data['id_security'] == $id_security) continue; ?>
-                  <option value="<?= $data['id_security'] ?>"><?= $data['nama'] ?></option>
-                <?php endwhile; ?>
-              </select>
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Alasan Request jadwal</h1>
-              <textarea type="text" name="alasan" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan alasan anda"></textarea>
-            </div>
-
-            <div>
-              <button type="submit" name="submit" class="w-full px-[10px] py-[5px] rounded-[10px] bg-ijo-500 text-s-white font-medium text-[20px]">KIRIM</button>
-            </div>
-
           </div>
-        </form>
-      </div>
 
+          <div class="flex flex-col gap-1.5">
+            <label for="nama" class="text-sm font-medium text-s-black">Nama</label>
+            <input type="text" name="nama" id="nama" value="<?= $nama_security ?>" readonly
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/10 bg-s-grey/10 text-s-black outline-none">
+          </div>
 
-    </main>
+          <div class="flex flex-col gap-1.5">
+            <label for="id_rekan" class="text-sm font-medium text-s-black">Nama Teman Pengganti</label>
+            <select name="id_rekan" id="id_rekan" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
+              <option value="">Pilih Rekan</option>
+              <?php while ($data = mysqli_fetch_assoc($hasil)) : ?>
+                <?php if ($data['id_security'] == $id_security) continue; ?>
+                <option value="<?= $data['id_security'] ?>"><?= $data['nama'] ?></option>
+              <?php endwhile; ?>
+            </select>
+          </div>
 
-  </section>
+          <div class="flex flex-col gap-1.5">
+            <label for="alasan" class="text-sm font-medium text-s-black">Alasan Request Jadwal</label>
+            <textarea name="alasan" id="alasan" rows="3" placeholder="Masukan alasan anda" required
+              class="w-full px-4 py-3 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40"></textarea>
+          </div>
+        </div>
+
+        <button type="submit" name="submit"
+          class="w-full h-[48px] rounded-xl bg-ijo-500 text-s-white font-semibold text-base hover:bg-ijo-600 active:bg-ijo-600 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+          Kirim
+        </button>
+      </form>
+    </div>
+  </main>
 </body>
 
 </html>

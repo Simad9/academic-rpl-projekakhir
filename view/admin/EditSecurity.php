@@ -15,7 +15,7 @@ if (isset($_POST['simpan'])) {
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
   <?php include '../../tamplate/meta.php'; ?>
@@ -23,57 +23,54 @@ if (isset($_POST['simpan'])) {
   <title>Edit Security</title>
 </head>
 
-<body class=" md:w-5/12 md:m-auto border border-s-black border-e-black">
-  <section class="flex flex-col gap-[10px] h-screen">
+<body class="bg-s-grey/20">
+  <main class="w-full max-w-[430px] mx-auto min-h-screen bg-s-white shadow-2xl flex flex-col">
     <?php judulPath("Edit Security", "./JadwalSecurity.php") ?>
 
-    <main class="px-[15px] flex flex-col gap-[20px] pb-[15px]">
+    <div class="flex-1 flex flex-col gap-5 px-4 py-5">
+      <h1 class="text-base font-semibold text-s-black">Edit Security</h1>
 
-      <div class="flex flex-col gap-[10px]">
-        <h1 class="text-t-black font-semibold text-[18px]"> Edit Security</h1>
-
-        <form action="" method="post">
-          <div class="flex flex-col gap-[10px]">
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Nama</h1>
-              <input type="text" name="nama" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan Nama Security" value="<?= $data['nama'] ?>">
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">No Hp</h1>
-              <input type="text" name="nohp" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan No Hp Security" value="<?= $data['noHp'] ?>">
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Username</h1>
-              <input type="text" name="username" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan Username Security Sementara" value="<?= $data['username'] ?>">
-            </div>
-
-            <div>
-              <h1 class="font-semibold text-s-black text-[15px]">Password</h1>
-              <input type="password" name="password" class="px-[15px] py-[5px] border border-s-black rounded-[8px] w-full" placeholder="Masukan Password Security Sementara" value="<?= $data['password'] ?>">
-            </div>
-
-            <div>
-              <!-- <a href="./JadwalSecurity.php" class="w-full"> -->
-              <button type="submit" name="simpan" class="w-full px-[10px] py-[5px] rounded-[10px] bg-ijo-500 text-s-white font-medium text-[20px]">SIMPAN</button>
-              <!-- </a> -->
-            </div>
-
-            <div>
-              <button type="submit" name="hapus" class="w-full px-[10px] py-[5px] rounded-[10px] bg-s-red text-s-white font-medium text-[20px]">HAPUS</button>
-            </div>
-
-
+      <form action="" method="post" class="flex flex-col gap-5">
+        <div class="flex flex-col gap-4">
+          <div class="flex flex-col gap-1.5">
+            <label for="nama" class="text-sm font-medium text-s-black">Nama</label>
+            <input type="text" name="nama" id="nama" value="<?= $data['nama'] ?>" placeholder="Masukan Nama Security" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
           </div>
-        </form>
-      </div>
 
+          <div class="flex flex-col gap-1.5">
+            <label for="nohp" class="text-sm font-medium text-s-black">No Hp</label>
+            <input type="text" name="nohp" id="nohp" value="<?= $data['noHp'] ?>" placeholder="Masukan No Hp Security" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
+          </div>
 
-    </main>
+          <div class="flex flex-col gap-1.5">
+            <label for="username" class="text-sm font-medium text-s-black">Username</label>
+            <input type="text" name="username" id="username" value="<?= $data['username'] ?>" placeholder="Masukan Username Security Sementara" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
+          </div>
 
-  </section>
+          <div class="flex flex-col gap-1.5">
+            <label for="password" class="text-sm font-medium text-s-black">Password</label>
+            <input type="password" name="password" id="password" value="<?= $data['password'] ?>" placeholder="Masukan Password Security Sementara" required
+              class="w-full h-[48px] px-4 rounded-lg border border-s-black/20 bg-s-white text-s-black placeholder:text-s-grey outline-none transition focus:border-ijo-500 focus:ring-2 focus:ring-ijo-400/40">
+          </div>
+        </div>
+
+        <div class="flex flex-col gap-3">
+          <button type="submit" name="simpan"
+            class="w-full h-[48px] rounded-xl bg-ijo-500 text-s-white font-semibold text-base hover:bg-ijo-600 active:bg-ijo-600 focus-visible:ring-2 focus-visible:ring-ijo-400 transition-colors">
+            Simpan
+          </button>
+
+          <button type="submit" name="hapus"
+            class="w-full h-[48px] rounded-xl border border-s-red bg-s-white text-s-red font-semibold text-base hover:bg-s-red hover:text-s-white active:bg-s-red active:text-s-white focus-visible:ring-2 focus-visible:ring-s-red/40 transition-colors">
+            Hapus
+          </button>
+        </div>
+      </form>
+    </div>
+  </main>
 </body>
 
 </html>
